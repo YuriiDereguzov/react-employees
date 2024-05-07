@@ -9,6 +9,7 @@ import { Paths } from "./paths";
 import { Login } from "./pages/Login/Login";
 import { Register } from "./pages/Register/Register";
 import "./index.css";
+import { Auth } from "./features/auth/auth";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +35,9 @@ root.render(
       <ConfigProvider theme={{
         algorithm: theme.darkAlgorithm
       }}>
-        <RouterProvider router={router} />
+        <Auth>
+          <RouterProvider router={router} />
+        </Auth>
       </ConfigProvider>
     </Provider>
   </React.StrictMode>
