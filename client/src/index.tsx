@@ -11,6 +11,8 @@ import { Register } from "./pages/Register/Register";
 import "./index.css";
 import { Auth } from "./features/auth/auth";
 import { Employees } from "./pages/Employees/Employees";
+import { AddEmployee } from "./pages/AddEmployee/AddEmployee";
+import { Status } from "./pages/Status/Status";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +27,14 @@ const router = createBrowserRouter([
     path: Paths.register,
     element: <Register />,
   },
+  {
+    path: Paths.employeeAdd,
+    element: <AddEmployee />,
+  },
+  {
+    path: `${Paths.status}/:status`,
+    element: <Status />,
+  },
 ]);
 
 const container = document.getElementById("root")!;
@@ -33,9 +43,11 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ConfigProvider theme={{
-        algorithm: theme.darkAlgorithm
-      }}>
+      <ConfigProvider
+        theme={{
+          algorithm: theme.darkAlgorithm,
+        }}
+      >
         <Auth>
           <RouterProvider router={router} />
         </Auth>
