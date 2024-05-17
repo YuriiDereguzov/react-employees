@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Navigate, useNavigation, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import {
   useGetEmployeeQuery,
   useRemoveEmployeeMutation,
@@ -11,9 +11,11 @@ import { Descriptions, Divider, Modal, Space } from "antd";
 import { CustomButton } from "../../conponents/CustomButtom/CustomButton";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { ErrorMessage } from "../../conponents/ErrorMassage/ErrorMessage";
+import { Paths } from "../../paths";
+import { isErrorsWithMassage } from "../../utils/isErrorWithMassage";
 
 export const Employee = () => {
-  const navigate = useNavigation();
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const params = useParams<{ id: string }>();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,8 +34,26 @@ export const Employee = () => {
   const showModal = () => {
     setIsModalOpen(true);
   };
+
   const hideModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleDeleteUser = async () => {
+    hideModal();
+    try {
+      await removeEmployee(data.id).unwrap();
+
+      navigate(`${Paths.status}/deleted`);
+    } catch (error) {
+      const maybeError = isErrorsWithMassage(error);
+
+      if (maybeError) {
+        setError(error.data.message);
+      } else {
+        setError("Неизвестная ошибка");
+      }
+    }
   };
 
   return (
@@ -77,7 +97,7 @@ export const Employee = () => {
       <Modal
         title="Подтвердите удаление"
         open={isModalOpen}
-        onOk={() => null}
+        onOk={handleDeleteUser}
         onCancel={hideModal}
         okText="Подтвердить"
         cancelText="Отменить"
