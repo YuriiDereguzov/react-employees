@@ -8,11 +8,12 @@ import reportWebVitals from "./reportWebVitals";
 import { Paths } from "./paths";
 import { Login } from "./pages/Login/Login";
 import { Register } from "./pages/Register/Register";
-import "./index.css";
 import { Auth } from "./features/auth/auth";
 import { Employees } from "./pages/Employees/Employees";
 import { AddEmployee } from "./pages/AddEmployee/AddEmployee";
 import { Status } from "./pages/Status/Status";
+import { Employee } from "./pages/Employee/Employee";
+import "./index.css";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: `${Paths.status}/:status`,
     element: <Status />,
+  },
+  {
+    path: `${Paths.employee}/:id`,
+    element: <Employee />,
   },
 ]);
 
